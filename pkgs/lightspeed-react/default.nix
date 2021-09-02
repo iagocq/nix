@@ -10,7 +10,7 @@ in
 
 stdenv.mkDerivation {
   pname = "lightspeed-react";
-  version = "git-20210221-08c2894b5a3059d24c664aefe6256c88f0f15038";
+  version = "20210221-08c2894b5a3059d24c664aefe6256c88f0f15038";
 
   src = fetchgit {
     url = "git://github.com/GRVYDEV/Lightspeed-react.git";
