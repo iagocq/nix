@@ -3,6 +3,7 @@ final: prev:
 let
   pkgs = prev;
   callPackage = pkgs.callPackage;
+in
 {
   lightspeed-ingest = callPackage ./lightspeed-ingest { };
   lightspeed-react = callPackage ./lightspeed-react { };
