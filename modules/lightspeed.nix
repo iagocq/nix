@@ -29,14 +29,10 @@ let
     RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ];
     RestrictNamespaces = true;
     LockPersonality = true;
-    MemoryDenyWriteExecute = !(builtins.any (mod: (mod.allowMemoryWriteExecute or false)) cfg.package.modules);
     RestrictRealtime = true;
     RestrictSUIDSGID = true;
     RemoveIPC = true;
     PrivateMounts = true;
-    # System Call Filtering
-    SystemCallArchitectures = "native";
-    SystemCallFilter = "~@cpu-emulation @debug @keyring @ipc @mount @obsolete @privileged @setuid";
   };
 in
 {
@@ -68,18 +64,6 @@ in
         type = types.package;
         description = "lightspeed-ingest package to use.";
       };
-
-      user = mkOption {
-        default = user;
-        type = types.str;
-        description = "User account under which lightspeed-ingest runs.";
-      };
-
-      group = mkOption {
-        default = group;
-        type = types.str;
-        description = "Group account under which lightspeed-ingest runs.";
-      };
     };
 
     services.lightspeed.webrtc = {
@@ -88,7 +72,10 @@ in
       address = mkOption {
         default = "localhost";
         type = types.str;
-        description = "Address where the HTTP server will listen on.";
+        description = ''
+          Address where the HTTP server will listen on.
+          Change this so WebRTC clients can connect.
+        '';
       };
 
       webrtcAddress = mkOption {
@@ -144,30 +131,30 @@ in
         type = types.package;
         description = "Lightspeed-webrtc package to use.";
       };
+    };
 
-      user = mkOption {
-        default = user;
-        type = types.str;
-        description = "User account under which lightspeed-webrtc runs.";
-      };
+    services.lightspeed.user = mkOption {
+      default = user;
+      type = types.str;
+      description = "User account under which lightspeed services run.";
+    };
 
-      group = mkOption {
-        default = group;
-        type = types.str;
-        description = "Group account under which lightspeed-webrtc runs.";
-      };
+    services.lightspeed.group = mkOption {
+      default = group;
+      type = types.str;
+      description = "Group account under which lightspeed services run.";
     };
   };
 
-  config = (mkIf cfg.ingest.enable {
-    users.users.${cfg.ingest.user} = {
-      group = cfg.ingest.group;
+  config = {
+    users.users.${cfg.user} = mkIf (cfg.ingest.enable or cfg.webrtc.enable) {
+      group = cfg.group;
       isSystemUser = true;
     };
 
-    users.groups.${cfg.ingest.group} = { };
+    users.groups.${cfg.group} = mkIf (cfg.ingest.enable or cfg.webrtc.enable) { };
 
-    systemd.services.lightspeed-ingest = {
+    systemd.services.lightspeed-ingest = mkIf cfg.ingest.enable {
       description = "lightspeed-ingest FTL handshake server";
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
@@ -184,26 +171,18 @@ in
         Restart = "always";
         RestartSec = "10s";
 
-        User = cfg.ingest.user;
-        Group = cfg.ingest.group;
+        User = cfg.user;
+        Group = cfg.group;
 
-        RuntimeDirectory = "lightspeed-ingest";
-        CacheDirectory = "lightspeed-ingest";
-        LogsDirectory = "lightspeed-ingest";
+        StateDirectory = "lightspeed-ingest";
+        WorkingDirectory = "/var/lib/lightspeed-ingest";
 
         AmbientCapabilities = [ "CAP_NET_BIND_SERVICE" ];
         CapabilityBoundingSet = [ "CAP_NET_BIND_SERVICE" ];
       };
     };
-  }) // (mkIf cfg.webrtc.enable {
-    users.users.${cfg.webrtc.user} = {
-      group = cfg.webrtc.group;
-      isSystemUser = true;
-    };
 
-    users.groups.${cfg.webrtc.group} = { };
-
-    systemd.services.lightspeed-webrtc = {
+    systemd.services.lightspeed-webrtc = mkIf cfg.webrtc.enable {
       description = "lightspeed-webrtc RTP -> WebRTC server";
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
@@ -212,25 +191,22 @@ in
         ExecStart = concatStringsSep " " ([
           "${cfg.webrtc.package}/bin/lightspeed-webrtc"
           "--addr ${cfg.webrtc.address}"
-          "--ip ${cfg.webrtc.webrtcAddress}"
           "--ports ${cfg.webrtc.webrtcPorts}"
-          "--rtp-port ${cfg.webrtc.rtpPort}"
+          "--rtp-port ${toString cfg.webrtc.rtpPort}"
+          "--ws-port ${toString cfg.webrtc.wsPort}"
+          ''${optionalString (cfg.webrtc.webrtcAddress != null) "--ip ${cfg.webrtc.webrtcAddress}"}''
           ''${optionalString (cfg.webrtc.sslCert != null) "--ssl-cert ${cfg.webrtc.sslCert}"}''
           ''${optionalString (cfg.webrtc.sslKey != null) "--ssl-key ${cfg.webrtc.sslKey}"}''
         ] ++ cfg.webrtc.extraArgs);
         Restart = "always";
         RestartSec = "10s";
 
-        User = cfg.webrtc.user;
-        Group = cfg.webrtc.group;
-
-        RuntimeDirectory = "lightspeed-webrtc";
-        CacheDirectory = "lightspeed-webrtc";
-        LogsDirectory = "lightspeed-webrtc";
+        User = cfg.user;
+        Group = cfg.group;
 
         AmbientCapabilities = [ "CAP_NET_BIND_SERVICE" ];
         CapabilityBoundingSet = [ "CAP_NET_BIND_SERVICE" ];
       };
     };
-  });
+  };
 }
