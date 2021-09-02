@@ -1,8 +1,8 @@
-# nix-templates
+# nix
 
-Flake templates for miscellaneous projects
+Nix flake things, like templates for miscellaneous projects, an overlay, and NixOS modules.
 
-## Usage
+## Templates usage
 
 ### Listing templates
 `nix flake show github:iagocq/nix-templates`
