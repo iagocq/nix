@@ -1,7 +1,5 @@
-# nix
-Random things flakes things, like templates, packages and NixOS modules.
+# nix-templates
 
-## Templates
 Flake templates for miscellaneous projects
 
 ## Usage
