@@ -85,8 +85,8 @@ in
       };
 
       webrtcPorts = mkOption {
-        default = "20000-20500";
-        type = types.str;
+        default = { from = 20000; to = 20500; };
+        type = types.attrsOf types.port;
         description = "Port range WebRTC will use to connect with clients.";
       };
 
@@ -188,15 +188,15 @@ in
       after = [ "network.target" ];
 
       serviceConfig = systemd-config // {
-        ExecStart = concatStringsSep " " ([
+        ExecStart = toString ([
           "${cfg.webrtc.package}/bin/lightspeed-webrtc"
           "--addr ${cfg.webrtc.address}"
-          "--ports ${cfg.webrtc.webrtcPorts}"
+          "--ports ${toString cfg.webrtc.webrtcPorts.from}-${toString cfg.webrtc.webrtcPorts.to}"
           "--rtp-port ${toString cfg.webrtc.rtpPort}"
           "--ws-port ${toString cfg.webrtc.wsPort}"
-          ''${optionalString (cfg.webrtc.webrtcAddress != null) "--ip ${cfg.webrtc.webrtcAddress}"}''
-          ''${optionalString (cfg.webrtc.sslCert != null) "--ssl-cert ${cfg.webrtc.sslCert}"}''
-          ''${optionalString (cfg.webrtc.sslKey != null) "--ssl-key ${cfg.webrtc.sslKey}"}''
+          (optionalString (cfg.webrtc.webrtcAddress != null) "--ip ${cfg.webrtc.webrtcAddress}")
+          (optionalString (cfg.webrtc.sslCert != null) "--ssl-cert ${cfg.webrtc.sslCert}")
+          (optionalString (cfg.webrtc.sslKey != null) "--ssl-key ${cfg.webrtc.sslKey}")
         ] ++ cfg.webrtc.extraArgs);
         Restart = "always";
         RestartSec = "10s";
