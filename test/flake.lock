@@ -1,0 +1,38 @@
+{
+  "nodes": {
+    "iago-nix": {
+      "locked": {
+        "narHash": "sha256-SsH3gPpPlYR07lE500haeGIAb23lWFRoDWkBaQraozs=",
+        "path": "..",
+        "type": "path"
+      },
+      "original": {
+        "path": "..",
+        "type": "path"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1631725679,
+        "narHash": "sha256-EXFxVj4rN3IN8o6OSipUH2JczePbRkkUvF+ZMan9xm4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2bb5cbf7f8b99a8d1d6646abe5ab993f6823212f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "iago-nix": "iago-nix",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

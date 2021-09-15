@@ -5,7 +5,9 @@ let
   callPackage = pkgs.callPackage;
 in
 {
+  adguardhome = callPackage ./adguardhome { };
   lightspeed-ingest = callPackage ./lightspeed-ingest { };
   lightspeed-react = callPackage ./lightspeed-react { };
   lightspeed-webrtc = callPackage ./lightspeed-webrtc { };
+  telegram-send = callPackage ./telegram-send { };
 }
