@@ -4,9 +4,14 @@
 
   outputs = { self, nixpkgs, iago-nix }:
   let
-    nixpkgs-ov = system: import nixpkgs ({ inherit system; overlays = [ iago-nix.overlay ]; });
+    config = { allowUnfree = true; };
+    nixpkgs-ov = system: import nixpkgs ({ inherit system; overlays = [ iago-nix.overlay ]; config = config; });
+    nixpkgs-ins = nixpkgs-ov "x86_64-linux";
   in
   {
-    legacyPackages."x86_64-linux" = (nixpkgs-ov "x86_64-linux");
+    legacyPackages."x86_64-linux" = nixpkgs-ins;
+    devShell."x86_64-linux" = nixpkgs-ins.mkShell {
+      nativeBuildInputs = with nixpkgs-ins; [ truckersmp-cli steamcmd ];
+    };
   };
 }

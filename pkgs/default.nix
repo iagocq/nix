@@ -11,4 +11,9 @@ in
   lightspeed-webrtc = callPackage ./lightspeed-webrtc { };
   telegram-send = callPackage ./telegram-send { };
   streamlink-pr4022 = callPackage ./streamlink { };
+  truckersmp-cli = callPackage ./truckersmp-cli { };
+  nixUnstable = prev.nixUnstable.override {
+    patches = [ ./nix-unset-is-macho.patch ];
+  };
+  zsh-f-sy-h = callPackage ./zsh-f-sy-h { };
 }

@@ -2,7 +2,7 @@
   "nodes": {
     "iago-nix": {
       "locked": {
-        "narHash": "sha256-8biyghyGrx0LEDINLR8scxpyB2ur2qtnwNJg9ptN2Q8=",
+        "narHash": "sha256-vFbTLTWJWBi9fxfM7YOO7lzQ1B9NJii1sFG7hLew9wk=",
         "path": "..",
         "type": "path"
       },
