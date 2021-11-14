@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs";
+  inputs.nixpkgs.url = "nixpkgs";
   inputs.iago-nix.url = "path:..";
 
   outputs = { self, nixpkgs, iago-nix }:
