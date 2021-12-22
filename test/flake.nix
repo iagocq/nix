@@ -11,7 +11,7 @@
   {
     legacyPackages."x86_64-linux" = nixpkgs-ins;
     devShell."x86_64-linux" = nixpkgs-ins.mkShell {
-      nativeBuildInputs = with nixpkgs-ins; [ truckersmp-cli steamcmd ];
+      nativeBuildInputs = with nixpkgs-ins; [ zig ];
     };
   };
 }
