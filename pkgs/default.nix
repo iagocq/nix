@@ -9,8 +9,14 @@ in
   lightspeed-ingest = callPackage ./lightspeed-ingest { };
   lightspeed-react = callPackage ./lightspeed-react { };
   lightspeed-webrtc = callPackage ./lightspeed-webrtc { };
-  telegram-send = callPackage ./telegram-send { };
+  parprouted = callPackage ./parprouted { };
+
+  pptpd = pkgs.pptpd.overrideAttrs (old: {
+    configureFlags = [ "--enable-bcrelay" ];
+  });
+
   streamlink-pr4022 = callPackage ./streamlink { };
+  telegram-send = callPackage ./telegram-send { };
   truckersmp-cli = callPackage ./truckersmp-cli { };
 
   /*
