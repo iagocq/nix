@@ -41,8 +41,8 @@ in
       fetchSubmodules = true;
       owner = "zigtools";
       repo = "zls";
-      rev = "fefabc658fd0f14eb0f3cf637805ad51efc5f052";
-      sha256 = "sha256-O4yBj9QsE0MgzimlYQ+3Af2bh7SGWST4XniJ8qXqmpA=";
+      rev = "189de1768dfc95086a15664123c11144e9ac1402";
+      sha256 = "sha256-iTYwK76N0efm/e0JZbxKKZ/j+dej9BX/SNWeox+iLjA=";
     };
   });
 
