@@ -26,12 +26,12 @@ in
   */
 
   zig = (pkgs.zig.override { llvmPackages = pkgs.llvmPackages_13; }).overrideAttrs (old: rec {
-    version = "0.9.0";
+    version = "0.10.0-dev";
     src = pkgs.fetchFromGitHub {
       owner = "ziglang";
       repo = "zig";
-      rev = version;
-      hash = "sha256-Hfl1KKtGcopMrn+U9r0/qr/wReWJIgb8+IgwMoguv/0=";
+      rev = "a5c7742ba6fc793608b8bb7ba058e33eccd9cfec";
+      hash = "sha256-nObE1WX5nY40v6ryaAB75kVKeE+Q76yKgfR/DYRDcwA=";
     };
   });
 
@@ -39,10 +39,10 @@ in
     version = "0.2.0";
     src = pkgs.fetchFromGitHub {
       fetchSubmodules = true;
-      owner = "mattmurr";
+      owner = "zigtools";
       repo = "zls";
-      rev = "1fa392c44b5c7427521f9bbdfc0fe40a404b0bd5";
-      sha256 = "sha256-0J9nSuMF0gGBAxz9LThoPIQWZvZiF6WS1/mfqJIvhnI=";
+      rev = "fefabc658fd0f14eb0f3cf637805ad51efc5f052";
+      sha256 = "sha256-O4yBj9QsE0MgzimlYQ+3Af2bh7SGWST4XniJ8qXqmpA=";
     };
   });
 
