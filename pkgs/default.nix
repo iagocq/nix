@@ -46,5 +46,25 @@ in
     };
   });
 
+  multimc = pkgs.multimc.overrideAttrs (old: rec {
+    src = pkgs.fetchFromGitHub {
+      fetchSubmodules = true;
+      owner = "AfoninZ";
+      repo = "MultiMC5-Cracked";
+      rev = "deffca3b6f84cfe0d5932b096da7ec216f3408df";
+      sha256 = "sha256-qJwXCVDJ2EAfGlHEgdkIFSaZv2AGF2oUjcRdc2XU8jI=";
+    };
+
+    postInstall = ''
+      #install -Dm644 ../launcher/resources/multimc/scalable/multimc.svg $out/share/pixmaps/multimc.svg
+      #install -Dm755 ../launcher/package/linux/multimc.desktop $out/share/applications/multimc.desktop
+      # xorg.xrandr needed for LWJGL [2.9.2, 3) https://github.com/LWJGL/lwjgl/issues/128
+      chmod -x $out/bin/*.so
+      wrapProgram $out/bin/DevLauncher \
+        --set GAME_LIBRARY_PATH /run/opengl-driver/lib:${with pkgs.xorg; pkgs.lib.makeLibraryPath [ libX11 libXext libXcursor libXrandr libXxf86vm pkgs.libpulseaudio pkgs.libGL ]} \
+        --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.xorg.xrandr ]}
+    '';
+  });
+
   zsh-f-sy-h = callPackage ./zsh-f-sy-h { };
 }
