@@ -1,11 +1,9 @@
-final: prev:
+{ pkgs }:
 
 let
-  pkgs = prev;
   callPackage = pkgs.callPackage;
 in
 {
-  adguardhome = callPackage ./adguardhome { };
   lightspeed-ingest = callPackage ./lightspeed-ingest { };
   lightspeed-react = callPackage ./lightspeed-react { };
   lightspeed-webrtc = callPackage ./lightspeed-webrtc { };
@@ -16,15 +14,8 @@ in
     configureFlags = [ "--enable-bcrelay" ];
   });
 
-  streamlink-pr4022 = callPackage ./streamlink { };
   telegram-send = callPackage ./telegram-send { };
   truckersmp-cli = callPackage ./truckersmp-cli { };
-
-  /*
-  nixUnstable = prev.nixUnstable.override {
-    patches = [ ./nix-unset-is-macho.patch ];
-  };
-  */
 
   zig = (pkgs.zig.override { llvmPackages = pkgs.llvmPackages_13; }).overrideAttrs (old: rec {
     version = "0.10.0-dev";
@@ -66,6 +57,4 @@ in
         --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.xorg.xrandr ]}
     '';
   });
-
-  zsh-f-sy-h = callPackage ./zsh-f-sy-h { };
 }

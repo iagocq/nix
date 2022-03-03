@@ -4,14 +4,13 @@
   outputs = ({ self, ...}@inputs:
     let
       templates = import ./templates;
-      overlay = import ./pkgs;
-      nixosModules = import ./modules;
+      pkgs = import ./nur.nix;
     in
     {
       templates = templates.templates;
       defaultTemplate = templates.default;
-      overlay = overlay;
-      nixosModules = nixosModules;
+      overlay = (pkgs { pkgs = null; }).overlays.all;
+      nixosModules = pkgs.modules;
     }
   );
 }
