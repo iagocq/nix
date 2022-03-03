@@ -10,6 +10,7 @@ in
   lightspeed-react = callPackage ./lightspeed-react { };
   lightspeed-webrtc = callPackage ./lightspeed-webrtc { };
   parprouted = callPackage ./parprouted { };
+  parsec = callPackage ./parsec { };
 
   pptpd = pkgs.pptpd.overrideAttrs (old: {
     configureFlags = [ "--enable-bcrelay" ];

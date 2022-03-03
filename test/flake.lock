@@ -2,7 +2,7 @@
   "nodes": {
     "iago-nix": {
       "locked": {
-        "narHash": "sha256-1YPRoAeIs87jgH4zesXwnab8EEiri/ZLObdI8RYefrQ=",
+        "narHash": "sha256-srPyOxtzx1D+hAlrTM9tJmDK5BhXmtFXbGB33y9TJw4=",
         "path": "..",
         "type": "path"
       },
@@ -13,10 +13,8 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1639620400,
-        "narHash": "sha256-I059qOrq0zh8ZD1AOposO7KXAOnhbWZ041Ya5an5Uyg=",
-        "path": "/nix/store/p6qd01yhs7knrcakcykbzbaw3p5m2njv-source",
-        "rev": "988b006652156f21a0dfd47833ba3610e6200d55",
+        "narHash": "sha256-bFI96ckrJ5/MvqvsexVTAWLope2EQCVZkDbC1fyPbSc=",
+        "path": "/nix/store/g0d6y5bbpfkaxhak31vqxjacaq8l4vg3-source",
         "type": "path"
       },
       "original": {
