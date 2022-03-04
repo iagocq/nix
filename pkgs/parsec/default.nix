@@ -121,9 +121,9 @@ in stdenv.mkDerivation rec {
     runHook postInstall
   '';
 
-  meta = {
+  meta = with lib; {
     description = "Simple, low-latency game streaming.";
     homepage = "https://parsec.app";
-    license = with lib.licenses; [ unfree ];
+    license = licenses.unfree;
   };
 }
