@@ -1,7 +1,8 @@
 { lib
 , stdenv
 , fetchurl
-, iproute2 }:
+, iproute2
+}:
 
 stdenv.mkDerivation rec {
   pname = "parprouted";
