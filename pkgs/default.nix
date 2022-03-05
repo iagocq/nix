@@ -15,7 +15,7 @@ in
   pptpd = pkgs.pptpd.overrideAttrs (old: {
     configureFlags = [ "--enable-bcrelay" ];
     meta = old.meta // {
-      description = old.description + " (with bcrelay)";
+      description = old.meta.description + " (with bcrelay)";
     };
   });
 
