@@ -18,6 +18,7 @@
     {
       templates = templates.templates;
       defaultTemplate = templates.default;
+      overlay = nur-no-pkgs.overlays.merged;
       overlays = nur-no-pkgs.overlays;
       nixosModules = nur-no-pkgs.modules;
       legacyPackages = allSystems nur-pkgs;
