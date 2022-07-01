@@ -17,7 +17,7 @@
 , libGL
 , libsamplerate
 , makeDesktopItem
-, libudev
+, udev
 , libva
 , vaapiVdpau
 , libxkbcommon
@@ -114,7 +114,7 @@ let
       freetype
       libGL
       libsamplerate
-      libudev
+      udev
       libva
       vaapiVdpau
       libxkbcommon
