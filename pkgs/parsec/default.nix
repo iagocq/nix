@@ -156,7 +156,7 @@ stdenv.mkDerivation rec {
       comment = "Simple, low-latency game streaming.";
       exec = "parsec %u";
       icon = "parsecd";
-      categories = "Network;Game;Utility;";
+      categories = [ "Network" "Game" "Utility" ];
     })
   ];
 
