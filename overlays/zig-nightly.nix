@@ -8,8 +8,8 @@ in
     src = pkgs.fetchFromGitHub {
       owner = "ziglang";
       repo = "zig";
-      rev = "d852894dcf6143ff76575245f092d9e26b0e8fa6";
-      hash = "sha256-YhspOaKOBqZVmfhiyQvQqn/3SKHelHQSU7G1JnWVnd0=";
+      rev = "c84e5ee87852eafff0cbf986bf02c5221cbcec35";
+      hash = "sha256-GicNLPwUIXfKLs8M6ZQ8UX7PGOTy5r31FBQMWUGoEUE=";
     };
     patches = [];
   });
